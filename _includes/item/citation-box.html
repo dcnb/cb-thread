@@ -1,0 +1,16 @@
+{% comment %}
+
+    Adds a basic citation box for the item with reference link to the item page.
+
+{%- endcomment -%}
+<div class="card">
+    <div class="card-header">Source</div>
+    <div class="card-body">
+        <dl>
+            <dt>Preferred Citation:</dt>
+            <dd>"{{ page.title }}", {{ site.title }}, {{ site.organization-name }}</dd>
+            <dt>Reference Link:</dt>
+            <dd>{{ page.url | absolute_url }}</dd>
+        </dl>
+    </div>
+</div>
