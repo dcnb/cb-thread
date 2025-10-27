@@ -1,13 +1,12 @@
 ---
-layout: essay-scroll
+layout: essay-content
 title: On the Duty of Civil Disobedience
 author: Henry David Thoreau
 date: 1949
 permalink: /essay/civil-disobedience.html 
 featured-image: "https://www.vision.org/sites/default/files/img/2017spring_david-henry-thoreau_1920x1080.jpg"
+custom-foot: essay/js/essay-scroll-js.html
 ---
-<div class="row my-4" >
-<div class="essay-main" markdown="1">
 
 ***Original title: Resistance to Civil Government***
 
