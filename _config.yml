@@ -1,4 +1,23 @@
 ##########
+# cb-thread
+
+
+collections:
+  essay:
+    sort_by: order
+    output: true
+
+
+defaults:
+  - 
+    scope: 
+      path: "" 
+      type: "essay"
+    values:
+      layout: "essay-content"
+      permalink: /essay/:slug:output_ext
+
+##########
 # collectionbuilder-csv
 # Jekyll Digital Collection Generator
 # https://github.com/CollectionBuilder/collectionbuilder-csv
@@ -18,7 +37,7 @@ source-code: https://github.com/CollectionBuilder/collectionbuilder-csv
 # SITE SETTINGS
 #
 # title of site appears in banner
-title: CollectionBuilder CSV
+title: CB-Essay
 # tagline, a short phrase that will appear throughout the site in the top banner
 tagline: Digital Collection Magic with Static Web Technologies
 # description appears in meta tags and other locations

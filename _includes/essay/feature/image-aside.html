@@ -1,0 +1,19 @@
+{% comment %}
+
+    Image Aside
+    Displays an image from the collection as an aside/margin note with full-screen viewer capability.
+    This include is typically called by aside.html when an objectid with display_template="image" is provided.
+
+    E.G. --> {% include essay/feature/image-aside.html %}
+    (Note: This include relies on the 'item' variable being set and 'include.caption' and 'include.height' being available from the parent include)
+
+    Options (passed through from parent include):
+    - "item" = collection item object with objectid (required, set by parent)
+    - "caption" = custom caption to override item title (optional)
+    - "height" = maximum height for the image, default "205px" (optional)
+
+{%- endcomment -%}
+<span class="aside"><a class="spotlight gallery-img" data-download="true" title="{{ item.title | escape }}" href="{{ item.object_location }}">
+    <span><span class="visually-hidden">Click image for full screen</span><small class=" text-secondary float-start" >{% include feature/icon.html icon="arrows-fullscreen" label="link to page" class="ms-1 mini mb-1"%}</small></span><br>
+    <img src="{{ item.image_small | relative_url }}" alt="{{ item.image_alt_text | default: item.description | default: item.title | escape }}" class="img-fluid" style='max-height: {{ include.height | default: '205px' }}'>
+</a><br><a class="text-info mt-3 text-center fs-6" href="{{ item.objectid | prepend: '/items/' | append: '.html ' | relative_url}}" title="link to item page" style='max-width:20vw'>{% if include.caption %}{{include.caption}}{% else %}{{ item.title }}{% endif %} {% include feature/icon.html icon="box-arrow-up-right" label="link to page" class="ms-1 mini mb-1"%}</a></span>

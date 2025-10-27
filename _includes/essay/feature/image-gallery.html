@@ -1,0 +1,52 @@
+{% comment %}
+
+    Image Gallery
+    Displays one or more images in a responsive gallery layout with full-screen viewer capability via Spotlight.js.
+    This include adds figures to the page styled using Bootstrap, https://getbootstrap.com/docs/5.1/content/figures/
+
+    E.G. --> {% include essay/feature/image-gallery.html objectid="demo_001" %}
+    E.G. --> {% include essay/feature/image-gallery.html objectid="demo_001;demo_002;demo_003" width="75" %}
+    E.G. --> {% include essay/feature/image-gallery.html objectid="/assets/img/photo.jpg" alt="Description" caption="My Photo" %}
+
+    Options:
+    - "objectid" = one or more items to display, several options below (required)
+        1. one or more objectids from this collection, separated by semicolon, e.g. "demo_001" or "demo_001;demo_005"
+        2. a full URL to an external image file, e.g. "https://example.com/image.jpg"
+        3. a relative link to an image file stored in this repository (not in collection), e.g. "/assets/img/photo.jpg"
+        IMPORTANT: Options 2 and 3 require an "alt" option for accessibility
+    - "alt" = alternative text describing the image(s). Required for external URLs or relative links (options 2 and 3). For collection items, automatically uses image_alt_text, description, or title from metadata. For multiple images, separate with semicolons (optional for collection items, required for external/relative images)
+    - "caption" = custom caption text. For collection items (option 1), defaults to item title from metadata; set to false ('caption=false' - no quotes) to remove caption. For external/relative images (options 2 and 3), only displays if explicitly set. For multiple images, separate with semicolons (optional)
+    - "link" = custom URL for image links. For collection items, defaults to item page. For external/relative images, defaults to the image file itself. For multiple images, separate with semicolons (optional)
+    - "width" = responsive width on desktop as percentage: "25", "50", "75", or "100" (will be 100% on mobile) (optional)
+
+{%- endcomment -%}
+{%- assign figures = include.objectid | split: ";" %}
+{%- assign figcount = figures | size -%}
+{%- assign captions = include.caption | split: ";" %}
+{%- assign alts = include.alt | split: ";" -%}
+{%- assign links = include.link | split: ";" -%}
+<div class="row">
+{% for i in figures %}
+{% if i contains "/" %}
+{%- capture image_src -%}{{ i | relative_url }}{%- endcapture -%}
+{%- capture image_caption -%}{{ captions[forloop.index0] }}{%- endcapture -%}
+{%- capture image_alt -%}{{ alts[forloop.index0] }}{%- endcapture -%}
+{%- capture image_link -%}{{ links[forloop.index0] | default: image_src }}{%- endcapture -%}
+{% else %}
+{%- assign figure = site.data[site.metadata] | where: "objectid", i | first -%}
+{%- capture image_link -%}{{ '/items/' | relative_url }}{% if figure.parentid %}{{ figure.parentid }}.html#{{ figure.objectid }}{% else %}{{ figure.objectid }}.html{% endif %}{% endcapture %}
+{%- capture image_caption -%}{{ captions[forloop.index0] | default: figure.title }}{%- endcapture -%}
+{%- capture image_alt -%}{{ alts[forloop.index0] | default: figure.image_alt_text | default: figure.description | default: figure.title }}{%- endcapture -%}
+{%- capture image_src -%}{{ figure.image_small | default: figure.object_location | relative_url }}{% endcapture %}
+{% endif %}
+<div class="col-md {% if figcount == 1 %}text-center{% elsif forloop.first %}text-md-end{% elsif forloop.last %}text-md-start{% else %}text-center{% endif %}">
+<figure class="figure mx-3{% if include.width %} feature-w-{{ include.width }}{% endif %}">
+<a class="spotlight gallery-img" data-download="true" title="{{ figure.title | escape }}" href="{{ figure.object_location }}">
+    <div><div class="visually-hidden">Click image for full screen</div><small class="mini text-secondary float-end">{% include feature/icon.html icon="arrows-fullscreen" label="link to page" class="ms-1 mini mb-1"%}</small></div>
+    <img src="{{ figure.image_small | relative_url }}" alt="{{ figure.image_alt_text | default: figure.description | default: figure.title | escape }}" class="img-fluid">
+</a>
+
+{% unless include.caption == false %}<figcaption class="figure-caption text-center mt-2">{% if i contains "/" %}{{ image_caption }}{% else %}<a class="text-info" href="{{ image_link }}" title="link to item page">{{ image_caption }} {% include feature/icon.html icon="box-arrow-up-right" label="link to page" class="ms-1 mini mb-1"%}</a>{% endif %}</figcaption>{% endunless %}
+</figure>
+</div>{% endfor %}
+</div>

@@ -1,0 +1,19 @@
+{% for line in site.data.trans[page.data] %}
+{{forloop.index}}
+{% assign start_time = line.start-time %}
+{% assign end_time = line.end-time %}
+
+{% comment %}Check if timestamps need conversion{% endcomment %}
+{% assign start_parts = start_time | split: ':' %}
+{% if start_parts.size == 4 %}
+  {% assign start_time = start_parts[0] | append: ':' | append: start_parts[1] | append: ':' | append: start_parts[2] | append: '.' | append: start_parts[3] %}
+{% endif %}
+
+{% assign end_parts = end_time | split: ':' %}
+{% if end_parts.size == 4 %}
+  {% assign end_time = end_parts[0] | append: ':' | append: end_parts[1] | append: ':' | append: end_parts[2] | append: '.' | append: end_parts[3] %}
+{% endif %}
+
+{{start_time}}0 --> {{end_time}}0
+{%if line.speaker-name%}<em>{{line.speaker-name }}</em>: {% endif %}{{ line.text }}
+{% endfor %}

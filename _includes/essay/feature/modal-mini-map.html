@@ -1,0 +1,146 @@
+{% comment %}
+
+    Modal Mini Map
+    Interactive Leaflet map displayed in an aside that opens a Bootstrap modal with full map view.
+    Displays a map pin button in the margin that triggers a modal containing an interactive map.
+
+    E.G. --> {% include essay/feature/modal-mini-map.html latitude="46.725562" longitude="-117.009633" %}
+    E.G. --> {% include essay/feature/modal-mini-map.html objectid="demo_001" location="Moscow, Idaho" map-zoom="12" %}
+    E.G. --> {% include essay/feature/modal-mini-map.html latitude="46.7" longitude="-117.0" button="View Location" color="primary" title="Site Location" %}
+
+    Map Options:
+    - "objectid" = objectid of an item from your metadata that has latitude/longitude fields. Using this option will set the map center and add a marker to the map (optional, provide this OR latitude/longitude)
+    - "latitude" = center latitude coordinate of the map (required if not using objectid)
+    - "longitude" = center longitude coordinate of the map (required if not using objectid)
+    - "location" = location name/label to display below button and as modal title (optional)
+    - "height" = height of the map in the modal, default "600px" (optional)
+    - "map-zoom" = zoom level for the map, default 10 (optional)
+    - "map-link" = set to true to add a button linking to collection's full map page, default false (optional)
+    - "basemap" = basemap style: Esri_WorldStreetMap, Esri_NatGeoWorldMap, Esri_WorldImagery, Stadia_AlidadeSmooth, Stadia_StamenToner. Default is Stadia_StamenToner (optional)
+
+    Modal Options:
+    - "button" = custom text/content for the button that triggers the modal, default is a map pin icon (optional)
+    - "color" = Bootstrap color for the button: primary, secondary, success, danger, warning, info, light, dark. Default is "dark" (optional)
+    - "title" = custom header text for the modal, defaults to location if provided (optional)
+
+{% endcomment %}
+{% capture map_id %}mini-map_{{ include.latitude | slugify }}{% endcapture %}
+{% capture map-pin %}<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pin-map" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M3.1 11.2a.5.5 0 0 1 .4-.2H6a.5.5 0 0 1 0 1H3.75L1.5 15h13l-2.25-3H10a.5.5 0 0 1 0-1h2.5a.5.5 0 0 1 .4.2l3 4a.5.5 0 0 1-.4.8H.5a.5.5 0 0 1-.4-.8z"/>
+    <path fill-rule="evenodd" d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999z"/>
+  </svg>{% endcapture %}
+{% assign map-item = site.data[site.metadata] | where: "objectid", include.objectid | first %}
+<span class="aside"><!-- Button trigger modal --><button type="button" class="ms-3 btn btn-outline-{{ include.color | default: 'dark' }} mb-2" data-bs-toggle="modal" data-bs-target="#Modal{{ include.latitude | slugify }}" aria-label="{% if include.location %}Open map of {{ include.location }}{% else %}Open location map{% endif %}">{{ include.button | default: map-pin }}</button><!-- Modal -->
+{% if include.location %}<br><small>{{include.location}}</small>{% endif %}</span>
+<div class="modal fade" id="Modal{{ include.latitude | slugify }}" tabindex="-1" role="dialog" aria-labelledby="ModalLabel{{ include.latitude | slugify }}" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">{% if include.location or include.title %}
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel{{ include.latitude | slugify }}">{{ include.title | default: include.location }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>{% endif %}
+            <div class="modal-body" >
+                <style>
+                #{{ map_id }} { height: {{ include.height | default: '600px' }}; z-index: 98; }
+                </style>
+                <div id="{{ map_id }}" class="my-5"></div>
+                {% if include.map-link == true %}
+                <a href="{{ '/map.html' | relative_url }}?location={{ map-item.latitude | default: include.latitude }},{{ map-item.longitude | default: include.longitude }}{%if include.objectid %}&marker={{ include.objectid }}{% endif %}" class="btn btn-outline-primary my-3">View on Full Map</a>{% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- load leaflet dependencies -- currently turned off for this project but can be turned on if needed 
+<link rel="stylesheet" href="{{ '/assets/lib/leaflet/leaflet.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/lib/leaflet/leaflet.fullscreen.css' | relative_url }}">-->
+<script>
+// Make all variables specific to this instance by using an IIFE
+(function() {
+  // initial start point
+  var mapCenter = [{{ map-item.latitude | default: include.latitude }}, {{ map-item.longitude | default: include.longitude }}];
+  var mapZoom = {{ include.map-zoom | default: 10 }};
+  var mapId = '{{ map_id }}';
+  var modalId = 'Modal{{ include.latitude | slugify }}';
+  
+  /* init map, set center and zoom */
+  var map = L.map(mapId, {
+      scrollWheelZoom: true}).setView(mapCenter, mapZoom);
+
+  /* add map layer options */
+  var Esri_WorldStreetMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
+  });
+  var Esri_NatGeoWorldMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
+      maxZoom: 16
+  });
+  var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+  });
+  var Stadia_AlidadeSmooth = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.{ext}', {
+  minZoom: 0,
+  maxZoom: 20,
+  attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  ext: 'png'
+  });
+  var Stadia_StamenToner = L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}{r}.{ext}', {
+  minZoom: 0,
+  maxZoom: 20,
+  attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  ext: 'png'
+  });
+  /* add base map switcher */
+  var baseMaps = {
+      "Esri World StreetMap": Esri_WorldStreetMap,
+      "Esri National Geo": Esri_NatGeoWorldMap,
+      "Esri Imagery": Esri_WorldImagery,
+      "Stadia Alidade Smooth": Stadia_AlidadeSmooth,
+      "Stadia Stamen Toner": Stadia_StamenToner
+  };
+  L.control.layers(baseMaps).addTo(map);
+  /* load base map */
+  {{ include.basemap | default: 'Stadia_StamenToner' }}.addTo(map);
+  /* add fullscreen control */ 
+  map.addControl(new L.Control.Fullscreen());
+
+  /* add marker as a red circle */
+  L.circleMarker(mapCenter, {
+    radius: 8,
+    fillColor: "#ff0000",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+  }).addTo(map)
+    .bindPopup('{{ map-item.title | escape }}');
+
+  // Store map reference, center point, and zoom level in a global object so we can access it later
+  if (!window.miniMaps) {
+    window.miniMaps = {};
+  }
+  window.miniMaps[mapId] = {
+    map: map,
+    center: mapCenter,
+    zoom: mapZoom
+  };
+
+  // Create a more specific listener for this modal
+  var myModal = document.getElementById(modalId); 
+  myModal.addEventListener('shown.bs.modal', function() {
+    // Get the map data for this modal
+    var mapData = window.miniMaps[mapId];
+    var currentMap = mapData.map;
+    
+    // Reset the map view using this specific map's stored center and zoom
+    setTimeout(function() {
+      currentMap.invalidateSize();
+      currentMap.setView(mapData.center, mapData.zoom);
+    }, 10);
+    
+    // Force a complete redraw with slight delay to ensure proper rendering
+    setTimeout(function() {
+      currentMap.invalidateSize();
+    }, 100);
+  });
+})();
+</script>

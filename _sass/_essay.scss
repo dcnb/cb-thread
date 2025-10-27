@@ -1,0 +1,189 @@
+
+/*  
+    essay - style tweaks related to essay layout and essay features
+*/
+
+
+
+/* Fading effects */
+
+
+/* Initially, steps are invisible */
+.step {
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.visible-step {
+    opacity: 1 !important;
+}
+
+#step0{
+    opacity: 1 !important;
+}
+
+.step.fade-in {
+    opacity: 1;
+    transition: opacity 0.75s ease-in;
+}
+
+
+
+.step.fade-out {
+    opacity: 0;
+    transition: opacity 0.75s ease-out;
+}
+/* To make sure the first step starts visible */
+#scrolly article .step:first-child {
+    opacity: 1;
+}
+
+.step{
+    margin-top:20px;
+}
+
+/* Print styles for steps */
+@media print {
+    .step {
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: block !important;
+        break-inside: avoid;
+    }
+}
+
+.essay-main {
+    max-width: 633px;
+    width: 60%;
+    margin: 0 17.5% 0;
+    @media (max-width: 768px) {
+        width: 90%;
+        margin: 0 2%;
+    }
+}
+
+/*Marginal Notes on Desktop*/
+aside, .aside {
+    display: inline;
+    float: right;
+    position: relative;
+    width: 20vw;
+    margin-right: -26vw;
+    font-size: 14px;
+    font-style: italic;
+
+}
+
+/*Marginal Notes on mobile*/
+    @media (max-width: 768px) {
+    aside, .aside {
+    display: block;
+    float: none;
+    margin: 5% 10%;
+    width: 80%;
+    font-size: 15px;
+    font-style: italic;
+    }
+}
+
+
+p{
+  
+    line-height: 1.6;
+
+
+}
+
+.text-justify  { text-align: justify !important; }
+
+
+video::cue {
+    font-family: "Libre Bodoni ", serif;
+    font-size: 1.04em;
+    line-height: 1.2;
+    padding: 0 0.5em;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.lg-video{
+    width: 800px !important;
+    height: auto;
+    @media (max-width: 868px) {
+        width: 100% !important;
+    }
+}
+
+.btn-link {
+    color: green;
+}
+
+.mini {
+    font-size: .75em;
+}
+
+.blockquote-footer {
+    color: #383A42;
+}
+
+.bg-success{
+    background-color: #3d7b53 !important;
+}
+
+.title-container {
+        height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-y: visible;
+        @media screen and (max-width: 768px) {
+            height: 67vh;
+            
+        }
+    }
+    
+    .title {
+        font-size: 13em;
+        @media screen and (max-width: 1200px) {
+            font-size: 10em; 
+            
+        }
+        @media screen and (max-width: 768px) {
+            font-size: 5.5em; 
+            
+        }
+        @media screen and (max-width: 528px) {
+            font-size: 4.5em; 
+            
+        }
+        opacity: 0;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        font-style: italic;
+        line-height: .8em;
+    }
+    
+    .letter {
+        display: inline-block;
+        transform: translate(0, 0);
+        opacity: 0;
+        transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .letter.animate {
+        opacity: 1;
+        transform: translate(0, 0) !important;
+    }
+    .gradient-fade-out {
+        height: 333px;
+        background-image: linear-gradient(to bottom, #3d7b53, white);
+        position: relative;
+        margin-top: -1px; /* To avoid any gap between sections */
+    }
+    .gradient-fade-in {
+        height: 133px;
+        background-image: linear-gradient(to bottom, white,#3d7b53);
+        position: relative;
+        margin-top: -1px; /* To avoid any gap between sections */
+    }

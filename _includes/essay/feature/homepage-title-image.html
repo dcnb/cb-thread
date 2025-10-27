@@ -1,0 +1,44 @@
+{% comment %}
+
+    Homepage Title Image
+    Displays a background image header with centered content for homepage or landing pages.
+
+    E.G. --> {% include essay/feature/homepage-title-image.html header-image="/assets/img/banner.jpg" %}
+
+    Options:
+    - "header-image" = path to header image file, relative to site root (required)
+
+{%- endcomment -%}
+<style>
+    #header-image{{ include.header-image | slugify }} {
+        background-image: url('{{ include.header-image |  relative_url }}');
+        background-size: contain;
+        background-position: center;
+        height: 35vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        position: relative;
+        transition: all 0.3s ease-out;
+    }
+
+  
+
+
+
+
+</style>
+
+<!-- Header Image -->
+<div class="header-image" id="header-image{{ include.header-image | slugify }}">
+
+ 
+    
+</div>
+
+
+
+

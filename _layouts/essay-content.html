@@ -1,0 +1,36 @@
+---
+layout: default
+gallery: true
+---
+{% assign objectid = page.objectid %}{% assign background-color = page.background-color %}{% assign text-color = page.text-color %}{% assign font-size = page.font-size %}{% assign content-width = page.content-width %}{% assign content-indent = page.additional-content-styles %}{% assign additional-content-styles = page.content-width %}{% assign header = page.header %}{% assign section-content = content %}
+
+
+<h1 class="display-4 essay-main">{{ page.title }}</h1>
+
+<div class="container my-5">
+<div class="row">
+    <div id="scrolly" class="container my-4">
+        <article>
+            <div class="row my-4 step">
+                <div class="{% if content-width %}col-md-{{content-width}} {% else %}essay-main {% endif %}{% if content-indent %}offset-md-{{content-indent}} {% endif %}{% if font-size %}fs-{{font-size}} {% endif %}{{additional-content-styles }}">
+{{content}}
+                </div>
+            </div>
+        </article>
+    </div>
+</div>
+<div class="text-end" id="next-section-button">
+        {% if page.next %}<a class="display-6 btn btn-lg btn-outline-dark next-button" href="{{ page.next.url | relative_url }}">{% if page.next.section-title %}{{ page.next.section-title }} &raquo;{% else %}Next &raquo;{% endif %}</a>{% endif %}
+    </div>
+</div>
+
+<script>
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowRight') {
+        const nextButton = document.querySelector('.next-button');
+        if (nextButton) {
+            nextButton.click();
+        }
+    }
+});
+</script>

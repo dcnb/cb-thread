@@ -1,0 +1,312 @@
+{% comment %}
+
+    Pull Quote with Translation
+    Displays a styled blockquote with toggle switch to alternate between original language and English translation.
+    Pulls data from CSV files in the _data/trans folder and displays with an interactive language toggle.
+
+    E.G. --> {% include essay/feature/pull-quote-translation.html trans="gae029" %}
+    E.G. --> {% include essay/feature/pull-quote-translation.html trans="gae029" lines="3-7" font-size="lg" %}
+    E.G. --> {% include essay/feature/pull-quote-translation.html trans="gae029" lines="3,5,7,9" font-size="md" %}
+
+    Options:
+    - "trans" = objectid/filename of CSV file in the _data/trans folder (without .csv extension). CSV should have columns: text, translation, and optionally speaker-name (required)
+    - "lines" = specific lines to display from the CSV data. Can be:
+        - A range: "3-7" (displays lines 3 through 7)
+        - Specific lines: "3,5,7" (displays only lines 3, 5, and 7)
+        - A single line: "5" (displays only line 5)
+        - Omit to display all lines from the CSV
+        (Note: line numbers are 1-indexed) (optional)
+    - "font-size" = text size: "sm" (fs-5), "md" (fs-4, default), "lg" (fs-3), "xl" (fs-2) (optional)
+
+    Features:
+    - Interactive toggle switch between original language (default: FR) and English translation
+    - Smooth slide animation when switching languages
+    - Respects site.data.theme.default_language setting (default: "fr")
+    - Displays speaker names when present in CSV data
+    - Links to the source item page if item exists in collection
+    - Includes all necessary CSS and JavaScript inline
+
+{%- endcomment -%}
+
+{% comment %}
+  Check if lines parameter exists and contains a hyphen (range) or commas (specific lines)
+{% endcomment %}
+{% assign trans_data = site.data.trans[include.trans] %}
+{% if include.lines %}
+  {% assign has_range = include.lines | split: "-" | size %}
+  {% assign has_specific = include.lines | split: "," | size %}
+{% endif %}
+{%- assign item = site.data[site.metadata] | where: "objectid", include.trans | first -%}
+
+{% comment %}Declare default language settings{% endcomment %}
+{% assign default_lang = site.data.theme.default_language | default: "fr" | downcase %}
+{% assign is_english_default = default_lang == "en" %}
+
+{% if include.lines %}
+  {% if has_range > 1 %}
+    {% comment %} Handle range of lines like "3-7" {% endcomment %}
+    {% assign lines_range = include.lines | split: "-" %}
+    {% assign start_line = lines_range[0] | minus: 1 | default: 0 %}
+    {% assign end_line = lines_range[1] | minus: 1 | default: start_line %}
+    {% assign line_mode = "range" %}
+  {% elsif has_specific > 1 %}
+    {% comment %} Handle specific lines like "3,5,7" {% endcomment %}
+    {% assign line_numbers = include.lines | split: "," %}
+    {% assign line_mode = "specific" %}
+  {% else %}
+    {% comment %} Handle single line {% endcomment %}
+    {% assign start_line = include.lines | minus: 1 | default: 0 %}
+    {% assign end_line = start_line %}
+    {% assign line_mode = "range" %}
+  {% endif %}
+{% else %}
+  {% comment %} Handle entire dataset when no lines specified {% endcomment %}
+  {% assign start_line = 0 %}
+  {% assign end_line = trans_data.size | minus: 1 %}
+  {% assign line_mode = "range" %}
+{% endif %}
+
+{% assign font_size = include.font-size | default: "md" %}
+{% assign font_size_class = "fs-4" %}
+{% if font_size == "sm" %}
+  {% assign font_size_class = "fs-5" %}
+{% elsif font_size == "lg" %}
+  {% assign font_size_class = "fs-3" %}
+{% endif %}
+
+<figure class="about-narrowed-content pt-3 pb-4">
+  <div class="position-relative">
+    <blockquote class="blockquote {{ font_size_class }} fst-italic ps-5 bg-light border-left">
+      <div class="mb-3 pe-5 pt-5">
+        {% assign last_speaker = "" %}
+        
+        {% if line_mode == "range" %}
+          {% comment %} Process continuous range of lines {% endcomment %}
+          {% for i in (start_line..end_line) %}
+            {% assign row = trans_data[i] %}
+            {% if row %}
+              {% if row['speaker-name'] %}{% assign speaker = row['speaker-name'] | append: ": " %}{% endif %}
+              {% assign text = row['text'] %}
+              {% assign translation = row['translation'] %}
+              
+              <div class="quote-item mb-3">
+                <div class="quote-text">{% if speaker != last_speaker %}{{ text | prepend: speaker | markdownify }}{% else %}{{ text | markdownify }}{% endif %}</div>
+                <div class="quote-translation d-none">{% if speaker != last_speaker %}{{ translation | prepend: speaker | markdownify }}{% else %}{{ translation | markdownify }}{% endif %}</div>
+              </div>
+              {% assign last_speaker = speaker %}
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          {% comment %} Process specific non-sequential lines {% endcomment %}
+          {% for line_number in line_numbers %}
+            {% assign idx = line_number | minus: 1 %}
+            {% assign row = trans_data[idx] %}
+            {% if row %}
+              {% if row['speaker-name'] %}{% assign speaker = row['speaker-name'] | append: ": " %}{% endif %}
+              {% assign text = row['text'] %}
+              {% assign translation = row['translation'] %}
+              
+              <div class="quote-item mb-3">
+                <div class="quote-text">{% if speaker %}{{ text | prepend: speaker | markdownify }}{% else %}{{ text | markdownify }}{% endif %}</div>
+                <div class="quote-translation d-none">{% if speaker %}{{ translation | prepend: speaker | markdownify }}{% else %}{{ translation | markdownify }}{% endif %}</div>
+              </div>
+              {% assign last_speaker = speaker %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </blockquote>
+    
+    <div class="position-absolute top-0 end-0 language-toggle-container">
+      <div class="toggle-switch-container sticky-top">
+        <span class="toggle-label orig-lang">FR</span>
+        <label class="toggle-switch" aria-label="Toggle between French and English">
+          <input type="checkbox" class="translation-toggle" aria-label="Switch language" aria-pressed="false" {% if is_english_default %}checked{% endif %}>
+          <span class="toggle-slider" role="switch" aria-checked="{{ is_english_default }}"></span>
+        </label>
+        <span class="toggle-label trans-lang">EN</span>
+      </div>
+    </div>
+    
+    <figcaption class="blockquote-footer bg-light text-end fs-5 pb-3 pe-1">
+      {%- capture item_link -%}{{ '/items/' | relative_url }}{% if item.parentid %}{{ item.parentid }}.html#{{ item.objectid }}{% else %}{{ item.objectid }}.html{% endif %}{%- endcapture -%}
+      {% if item %}
+        from <a href="{{item_link}}">{{ item.title }}</a>
+      {% endif %}
+    </figcaption>
+  </div>
+</figure>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const translationToggles = document.querySelectorAll('.translation-toggle');
+    
+    translationToggles.forEach(toggle => {
+      // Add event listener first
+      toggle.addEventListener('change', function() {
+        const blockquote = this.closest('figure').querySelector('blockquote');
+        const quoteItems = blockquote.querySelectorAll('.quote-item');
+        
+        quoteItems.forEach(item => {
+          const quoteText = item.querySelector('.quote-text');
+          const quoteTranslation = item.querySelector('.quote-translation');
+          
+          // Start the slide transition
+          if (this.checked) {
+            // Original text slides right, translation slides in from left
+            quoteText.classList.add('slide-right');
+            quoteTranslation.classList.remove('d-none');
+            quoteText.classList.add('d-none');
+            quoteTranslation.classList.add('slide-from-left');
+            
+            setTimeout(function() {
+              quoteText.classList.remove('slide-right');
+              quoteTranslation.classList.remove('slide-from-left');
+            }, 400); // Match the transition duration
+          } else {
+            // Translation slides left, original text slides in from right
+            quoteTranslation.classList.add('slide-left');
+            quoteText.classList.remove('d-none');
+            quoteTranslation.classList.add('d-none');
+            quoteText.classList.add('slide-from-right');
+            
+            setTimeout(function() {
+              quoteTranslation.classList.remove('slide-left');
+              quoteText.classList.remove('slide-from-right');
+            }, 400); // Match the transition duration
+          }
+        });
+      });
+
+      // Always trigger the change event to initialize the display based on toggle state
+      const event = new Event('change');
+      toggle.dispatchEvent(event);
+    });
+  });
+</script>
+
+<style>
+  /* Quote item styling */
+  .quote-item {
+    position: relative;
+    overflow: hidden; /* Important: contains the sliding elements */
+  }
+  
+  /* Toggle switch container */
+  .language-toggle-container {
+    z-index: 10;
+    margin: 0.5rem;
+  }
+  
+  .toggle-switch-container {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 3px 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .toggle-label {
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 0 4px;
+  }
+  
+  .orig-lang {
+    color: #3a3f43;
+  }
+  
+  .trans-lang {
+    color: #495057;
+  }
+  
+  /* Toggle switch styling */
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    margin: 0 5px;
+  }
+  
+  .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+  }
+  
+  .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .toggle-slider {
+    background-color: #6c757d;
+  }
+  
+  input:checked + .toggle-slider:before {
+    transform: translateX(18px);
+  }
+  
+  /* Slide transition effects */
+  .quote-text, .quote-translation {
+    width: 100%;
+    transition: transform 0.4s ease;
+    position: relative;
+  }
+  
+  /* Sliding animations */
+  .slide-right {
+    transform: translateX(100%);
+  }
+  
+  .slide-left {
+    transform: translateX(-100%);
+  }
+  
+  .slide-from-left {
+    animation: slideInFromLeft 0.4s forwards;
+  }
+  
+  .slide-from-right {
+    animation: slideInFromRight 0.4s forwards;
+  }
+  
+  @keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideInFromRight {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+</style>

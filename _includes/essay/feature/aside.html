@@ -1,0 +1,15 @@
+{% comment %}
+
+    Side Note / Aside / Margin Note
+    Creates a margin note that appears in the side margin of essay content.
+
+    E.G. --> {% include essay/feature/aside.html text="example text" %}
+    E.G. --> {% include essay/feature/aside.html objectid="demo_001" text="Additional context" %}
+
+    Options:
+    - "text" = text content for the aside, can use Markdown (optional)
+    - "objectid" = objectid from the collection metadata. If provided, will display the item with appropriate formatting based on its display_template (video, image, or pdf). If no objectid is provided, only text will be displayed (optional)
+    - "caption" = custom caption to override the item's title when using objectid (optional)
+    - "height" = maximum height for image asides in pixels, default "205px" (optional)
+
+{%- endcomment -%}{% if include.objectid %}{% assign item = site.data[site.metadata] | where: 'objectid', include.objectid | first %}{% if item.display_template == "video" %}<span class="aside">{% include feature/video.html objectid=include.objectid %}<br>{{ include.text }}</span>{% elsif item.display_template == "image" %}{% include feature/image-aside.html %}{% elsif item.display_template == "pdf" %}{% include feature/pdf-aside.html %}{% else %}<span class="aside">[![{{item.description | default: item.title }}]({{item.image_thumb}}){:.img-fluid .text-center style='max-width:20vw;max-height:205px' }]({{ item.objectid | prepend: '/items/' | append: '.html ' | relative_url}})<br><span class="text-center mt-2">{{item.title }}</span>{{ include.text }}</span>{% endif %}{% else %}<span class="aside">{{ include.text }}</span>{% endif %}

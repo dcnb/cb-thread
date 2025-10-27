@@ -1,0 +1,54 @@
+<div class="bg-english-green">
+<div class="title-container text-white">
+    <h1 class="title" style="font-family: 'Libre Bodoni';"><div>Tender</div><div>Spaces</div></h1>
+</div>
+<div class="py-5 my-0 mx-2" >
+
+<h2 class="fst-italic display-4 text-center mb-4 py-3 text-white" >by Alicia Gladman</h2>
+
+
+    
+
+</div>
+</div>
+<div class="gradient-fade-out">
+    <p class="text-center mb-5 fs-4 fst-italic text-white">{{site.description}}
+    </p>
+    <p class="text-center pt-3">
+<a class="text-center p-4 my-5 bg-dark bg-opacity-75" href="https://cdil.lib.uidaho.edu/" title="Center for Digital Inquiry and Learning home" target="_blank" rel="noopener" style="z-index:100">
+      <img alt="Center for Digital Inquiry and Learning (CDIL) home" src="https://cdil.lib.uidaho.edu/assets/img/logo.png" style="width:250px;">
+  </a>
+  </p>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const titleDivs = document.querySelectorAll('.title div');
+        titleDivs.forEach(div => {
+            const text = div.textContent;
+            div.textContent = '';
+            
+            [...text].forEach(char => {
+                const span = document.createElement('span');
+                span.textContent = char;
+                span.className = 'letter';
+                
+                const randomX = (Math.random() - 0.5) * window.innerWidth * 2;
+                const randomY = (Math.random() - 0.5) * window.innerHeight * 2;
+                
+                span.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                div.appendChild(span);
+            });
+        });
+
+        // Trigger animation
+        document.querySelector('.title').style.opacity = 1;
+        setTimeout(() => {
+            document.querySelectorAll('.letter').forEach((letter, i) => {
+                setTimeout(() => {
+                    letter.classList.add('animate');
+                }, i * 50);
+            });
+        }, 100);
+    });
+</script>
