@@ -13,7 +13,8 @@
     - "height" = maximum height for the image, default "205px" (optional)
 
 {%- endcomment -%}
-<span class="aside"><a class="spotlight gallery-img" data-download="true" title="{{ item.title | escape }}" href="{{ item.object_location }}">
+{%- capture item_link -%}{{ '/items/' | relative_url }}{% if item.parentid %}{{ item.parentid }}.html#{{ item.objectid }}{% else %}{{ item.objectid }}.html{% endif %}{%- endcapture -%}
+<span class="aside">{% if item.display_template == "image" %}<a class="spotlight gallery-img" data-download="true" title="{{ item.title | escape }}" href="{{ item.object_location }}">
     <span><span class="visually-hidden">Click image for full screen</span><small class=" text-secondary float-start" >{% include feature/icon.html icon="arrows-fullscreen" label="link to page" class="ms-1 mini mb-1"%}</small></span><br>
     <img src="{{ item.image_small | relative_url }}" alt="{{ item.image_alt_text | default: item.description | default: item.title | escape }}" class="img-fluid" style='max-height: {{ include.height | default: '205px' }}'>
-</a><br><a class="text-info mt-3 text-center fs-6" href="{{ item.objectid | prepend: '/items/' | append: '.html ' | relative_url}}" title="link to item page" style='max-width:20vw'>{% if include.caption %}{{include.caption}}{% else %}{{ item.title }}{% endif %} {% include feature/icon.html icon="box-arrow-up-right" label="link to page" class="ms-1 mini mb-1"%}</a></span>
+</a>{% else %}<img src="{{ item.image_small | relative_url }}" alt="{{ item.image_alt_text | default: item.description | default: item.title | escape }}" class="img-fluid mb-3" style='max-height: {{ include.height | default: '205px' }}'>{% endif %}<br><a class="text-center fs-6 text-dark" href="{{ item_link }}" title="link to item page" style='max-width:20vw'>{% if include.caption %}{{include.caption}}{% else %}{{ item.title }}{% endif %} {% include feature/icon.html icon="box-arrow-up-right" label="link to page" class="ms-1 mini mb-1"%}</a></span>

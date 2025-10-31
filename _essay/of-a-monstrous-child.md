@@ -1,15 +1,7 @@
 ---
 title: OF A MONSTROUS CHILD
 byline: MICHEL DE MONTAIGNE 
-translator: Charles Cotton
-editor: William Carew Hazlitt
-order: 3
-content-width:
-content-indent:
-background-color: blue
-text-color:
-font-size:
-additional-content-styles:
+order: 5
 ---
 
 This story shall go by itself; for I will leave it to physicians to discourse of. Two days ago I saw a child that two men and a nurse, who said they were the father, the uncle, and the aunt of it, carried about to get money by showing it, by reason it was so strange a creature. It was, as to all the rest, of a common form, and could stand upon its feet; could go and gabble much like other children of the same age; it had never as yet taken any other nourishment but from the nurse's breasts, and what, in my presence, they tried to put into the mouth of it, it only chewed a little and spat it out again without swallowing; the cry of it seemed indeed a little odd and particular, and it was just fourteen months old. Under the breast it was joined to another child, but without a head, and which had the spine of the back without motion, the rest entire; for though it had one arm shorter than the other, it had been broken by accident at their birth; they were joined breast to breast, and as if a lesser child sought to throw its arms about the neck of one something bigger. The juncture and thickness of the place where they were conjoined was not above four fingers, or thereabouts, so that if you thrust up the imperfect child you might see the navel of the other below it, and the joining was betwixt the paps and the navel. The navel of the imperfect child could not be seen, but all the rest of the belly, so that all that was not joined of the imperfect one, as arms, buttocks, thighs, and legs, hung dangling upon the other, and might reach to the mid-leg. The nurse, moreover, told us that it urined at both bodies, and that the members of the other were nourished, sensible, and in the same plight with that she gave suck to, excepting that they were shorter and less. This double body and several limbs relating to one head might be interpreted a favourable prognostic to the king,—[Henry III.]—of maintaining these various parts of our state under the union of his laws; but lest the event should prove otherwise, 'tis better to let it alone, for in things already past there needs no divination,

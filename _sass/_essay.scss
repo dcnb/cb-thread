@@ -1,4 +1,3 @@
-
 /*  
     essay - style tweaks related to essay layout and essay features
 */
@@ -142,7 +141,16 @@ video::cue {
     }
     
     .title {
+        /* Move all direct declarations before @media queries */
+        opacity: 0;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        font-style: italic;
+        line-height: .8em;
         font-size: 13em;
+        
         @media screen and (max-width: 1200px) {
             font-size: 10em; 
             
@@ -155,13 +163,6 @@ video::cue {
             font-size: 4.5em; 
             
         }
-        opacity: 0;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        font-style: italic;
-        line-height: .8em;
     }
     
     .letter {

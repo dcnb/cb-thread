@@ -1,18 +1,12 @@
 ---
 title: Of Thumbs
 byline: MICHEL DE MONTAIGNE 
-translator: Charles Cotton
-editor: William Carew Hazlitt
-order: 0
-content-width:
-content-indent:
-background-color:
-text-color:
-font-size:
-additional-content-styles:
+order: 1
 ---
 
 Tacitus reports, that amongst certain barbarian kings their manner was, when they would make a firm obligation, to join their right hands close to one another, and intertwist their thumbs; and when, by force of straining the blood, it appeared in the ends, they lightly pricked them with some sharp instrument, and mutually sucked them.
+
+{% include essay/feature/aside.html objectid="demo_005"%}
 
 Physicians say that the thumbs are the master fingers of the hand, and that their Latin etymology is derived from “pollere.” The Greeks called them ‘Avtixeip’, as who should say, another hand. And it seems that the Latins also sometimes take it in this sense for the whole hand:
 

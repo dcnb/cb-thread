@@ -1,15 +1,7 @@
 ---
 title: Of Smells
 byline: MICHEL DE MONTAIGNE 
-translator: Charles Cotton
-editor: William Carew Hazlitt
-order: 1
-content-width:
-content-indent:
-background-color: black
-text-color: white
-font-size: 
-additional-content-styles:
+order: 2
 ---
 
 {% include feature/video.html objectid="gae085" subtitles=true translation=true srclang="fr" translang="en" %}

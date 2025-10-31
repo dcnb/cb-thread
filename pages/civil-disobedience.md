@@ -5,7 +5,6 @@ author: Henry David Thoreau
 date: 1949
 permalink: /essay/civil-disobedience.html 
 featured-image: "https://www.vision.org/sites/default/files/img/2017spring_david-henry-thoreau_1920x1080.jpg"
-custom-foot: essay/js/essay-scroll-js.html
 ---
 
 ***Original title: Resistance to Civil Government***

@@ -1,16 +1,7 @@
 ---
 title: Of Sleep
 byline: MICHEL DE MONTAIGNE 
-translator: Charles Cotton
-editor: William Carew Hazlitt
-order: 2
-content-width:
-content-indent:
-background-color: black
-text-color: white
-font-size: 
-additional-content-styles:
-custom-foot: essay/js/essay-scroll-js.html
+order: 4
 ---
 
 {% include essay/feature/image-gallery.html objectid="gae095" %}

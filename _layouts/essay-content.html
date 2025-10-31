@@ -3,15 +3,17 @@ layout: default
 gallery: true
 ---
 {% assign objectid = page.objectid %}{% assign background-color = page.background-color %}{% assign text-color = page.text-color %}{% assign font-size = page.font-size %}{% assign content-width = page.content-width %}{% assign content-indent = page.additional-content-styles %}{% assign additional-content-styles = page.content-width %}{% assign header = page.header %}{% assign section-content = content %}
+<script src="{{ '/assets/lib/scrollama.js' | relative_url }}"></script>
 
-
-<h1 class="display-4 essay-main">{{ page.title }}</h1>
+{% if page.featured-image %}{% include essay/top-cover.html %}{% endif %}
 
 <div class="container my-5">
 <div class="row">
     <div id="scrolly" class="container my-4">
-        <article>
-            <div class="row my-4 step">
+        <article id="step0">
+            <h1 class="display-4 essay-main" id="page-title">{{ page.title }}</h1>
+
+            <div class="row my-4 step visible-step">
                 <div class="{% if content-width %}col-md-{{content-width}} {% else %}essay-main {% endif %}{% if content-indent %}offset-md-{{content-indent}} {% endif %}{% if font-size %}fs-{{font-size}} {% endif %}{{additional-content-styles }}">
 {{content}}
                 </div>
@@ -34,3 +36,6 @@ document.addEventListener('keydown', function(event) {
     }
 });
 </script>
+{% unless page.scrollama == false %}
+<script src="{{ '/assets/lib/scrollama.js' | relative_url }}"></script>
+{% include essay/js/essay-scroll-js.html %}{% endunless %}
