@@ -1,0 +1,29 @@
+{% comment %}Get the filename from the featured image path{% endcomment %}
+{% if page.layout == "essay-home" %}
+    {% assign featured_filename = site.data.featured_item.src | split: "/" | last %}
+    {% comment %}Find matching credit in credits.csv{% endcomment %}
+    {% assign image_credit = site.data.theme.featured-image-credit %}
+    {% else %}
+    {% assign image_credit = page.featured-image-credit %}
+    {% endif %}
+    {% if image_credit %}
+    <!-- Credits Box -->
+    <button type="button" class="text-white position-absolute bottom-0 start-0 px-2 bg-dark bg-opacity-75 small" data-bs-toggle="modal" data-bs-target="#imageCreditsModal">
+        Image Credits
+    </button>
+    
+    <!-- Credits Modal -->
+    <div class="modal fade" id="imageCreditsModal" tabindex="-1" aria-labelledby="imageCreditsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageCreditsModalLabel">Image Credits</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ image_credit.credit | markdownify }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
