@@ -9,19 +9,19 @@ order: 2
 
 It has been reported of some, as of Alexander the Great, that their sweat exhaled an odoriferous smell, occasioned by some rare and extraordinary constitution, of which Plutarch and others have been inquisitive into the cause. But the ordinary constitution of human bodies is quite otherwise, and their best and chiefest excellency is to be exempt from smell. Nay, the sweetness even of the purest breath has nothing in it of greater perfection than to be without any offensive smell, like those of healthful children, which made Plautus say of a woman:
 
-{% include essay/feature/blockquote.html quote="She smells sweetest, who smells not at all." speaker="Plautus, Mostel, i. 3, 116." %}
+{% include feature/blockquote.html quote="She smells sweetest, who smells not at all." speaker="Plautus, Mostel, i. 3, 116." %}
 
 And such as make use of fine exotic perfumes are with good reason to be suspected of some natural imperfection which they endeavour by these odours to conceal. To smell, though well, is to stink:
 
-{% include essay/feature/blockquote.html quote="You laugh at us, Coracinus, because we are not scented; I would, rather than smell well, not smell at all." speaker="Martial, vi. 55, 4." %}
+{% include feature/blockquote.html quote="You laugh at us, Coracinus, because we are not scented; I would, rather than smell well, not smell at all." speaker="Martial, vi. 55, 4." %}
 
 And elsewhere:
 
-{% include essay/feature/blockquote.html quote="Posthumus, he who ever smells well does not smell well." speaker="Martial, ii. 12, 14." %}
+{% include feature/blockquote.html quote="Posthumus, he who ever smells well does not smell well." speaker="Martial, ii. 12, 14." %}
 
 I am nevertheless a great lover of good smells, and as much abominate the ill ones, which also I scent at a greater distance, I think, than other men:
 
-{% include essay/feature/blockquote.html quote="My nose is quicker to scent a fetid sore or a rank armpit, than a dog to smell out the hidden sow." speaker="Horace, Epod., xii. 4." %}
+{% include feature/blockquote.html quote="My nose is quicker to scent a fetid sore or a rank armpit, than a dog to smell out the hidden sow." speaker="Horace, Epod., xii. 4." %}
 
 Of smells, the simple and natural seem to me the most pleasing. Let the ladies look to that, for 'tis chiefly their concern: amid the most profound barbarism, the Scythian women, after bathing, were wont to powder and crust their faces and all their bodies with a certain odoriferous drug growing in their country, which being cleansed off, when they came to have familiarity with men they were found perfumed and sleek. 'Tis not to be believed how strangely all sorts of odours cleave to me, and how apt my skin is to imbibe them. He that complains of nature that she has not furnished mankind with a vehicle to convey smells to the nose had no reason; for they will do it themselves, especially to me; my very mustachios, which are full, perform that office; for if I stroke them but with my gloves or handkerchief, the smell will not out a whole day; they manifest where I have been, and the close, luscious, devouring, viscid melting kisses of youthful ardour in my wanton age left a sweetness upon my lips for several hours after. And yet I have ever found myself little subject to epidemic diseases, that are caught, either by conversing with the sick or bred by the contagion of the air, and have escaped from those of my time, of which there have been several sorts in our cities and armies. We read of Socrates, that though he never departed from Athens during the frequent plagues that infested the city, he only was never infected.
 
