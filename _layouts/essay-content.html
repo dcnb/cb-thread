@@ -2,7 +2,7 @@
 layout: default
 gallery: true
 ---
-{% assign objectid = page.objectid %}{% assign background-color = page.background-color %}{% assign text-color = page.text-color %}{% assign font-size = page.font-size %}{% assign content-width = page.content-width %}{% assign content-indent = page.additional-content-styles %}{% assign additional-content-styles = page.content-width %}{% assign header = page.header %}{% assign section-content = content %}
+
 <script src="{{ '/assets/lib/scrollama.js' | relative_url }}"></script>
 
 {% if page.featured-image %}{% include essay/top-cover.html %}{% endif %}
@@ -26,16 +26,7 @@ gallery: true
     </div>
 </div>
 
-<script>
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'ArrowRight') {
-        const nextButton = document.querySelector('.next-button');
-        if (nextButton) {
-            nextButton.click();
-        }
-    }
-});
-</script>
 {% unless page.scrollama == false %}
 <script src="{{ '/assets/lib/scrollama.js' | relative_url }}"></script>
-{% include essay/js/essay-scroll-js.html %}{% endunless %}
+{% include essay/js/essay-scroll-js.html %}
+{% endunless %}
