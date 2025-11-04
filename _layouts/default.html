@@ -10,6 +10,7 @@
       <main id="maincontent" role="main" class="flex-shrink-0">
         {{ content }}
       </main>
+      {% if page.featured-image or page.layout == "home-essay" %}{% include essay/feature/featured-image-credit.html %}{% endif %}
     </div>
     {% include footer.html %}
     {% include foot.html %}
