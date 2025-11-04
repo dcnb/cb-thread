@@ -14,7 +14,7 @@
     - "longitude" = center longitude coordinate of the map (required if not using objectid)
     - "location" = location name/label to display below button and as modal title (optional)
     - "height" = height of the map in the modal, default "600px" (optional)
-    - "map-zoom" = zoom level for the map, default 10 (optional)
+    - "map-zoom" = zoom level for the map, default 13 (optional)
     - "map-link" = set to true to add a button linking to collection's full map page, default false (optional)
     - "basemap" = basemap style: Esri_WorldStreetMap, Esri_NatGeoWorldMap, Esri_WorldImagery, Stadia_AlidadeSmooth, Stadia_StamenToner. Default is Stadia_StamenToner (optional)
 
@@ -60,7 +60,7 @@
 (function() {
   // initial start point
   var mapCenter = [{{ map-item.latitude | default: include.latitude }}, {{ map-item.longitude | default: include.longitude }}];
-  var mapZoom = {{ include.map-zoom | default: 10 }};
+  var mapZoom = {{ include.map-zoom | default: 13 }};
   var mapId = '{{ map_id }}';
   var modalId = 'Modal{{ include.latitude | slugify }}';
   
@@ -108,8 +108,8 @@
   /* add marker as a red circle */
   L.circleMarker(mapCenter, {
     radius: 8,
-    fillColor: "#ff0000",
-    color: "#000",
+    fillColor: "teal",
+    color: "yellow",
     weight: 1,
     opacity: 1,
     fillOpacity: 0.8
