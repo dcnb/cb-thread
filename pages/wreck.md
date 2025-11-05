@@ -2,7 +2,7 @@
 layout: essay-content
 title: The Wreck of the Deutschland
 author: Gerard Manley Hopkins
-date: "Written 1875-75 | First published 1918"
+header-info: "Written 1875-75 | First published 1918"
 permalink: /essay/wreck-of-the-deutschland.html 
 featured-image: "/assets/img/deutschland.jpg"
 ---
