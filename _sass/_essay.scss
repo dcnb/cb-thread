@@ -23,7 +23,7 @@
 
 .step.fade-in {
     opacity: 1;
-    transition: opacity 0.75s ease-in;
+    transition: opacity 0.5s ease-in;
 }
 
 
@@ -141,7 +141,6 @@ video::cue {
     }
     
     .title {
-        /* Move all direct declarations before @media queries */
         opacity: 0;
         text-align: center;
         display: flex;
