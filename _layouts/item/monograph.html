@@ -1,0 +1,156 @@
+---
+# Monograph reading view layout
+# This provides a clean, book-like reading experience for digital monographs
+# Extends default layout to create a focused reading interface
+layout: default
+item-meta: true
+---
+
+{%- assign monograph_items = site.data[site.metadata] | where: "display_template", "monograph" | sort: "date" -%}
+{%- assign current_index = 0 -%}
+{%- for item in monograph_items -%}
+  {%- if item.objectid == page.objectid -%}
+    {%- assign current_index = forloop.index0 -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign prev_index = current_index | minus: 1 -%}
+{%- assign next_index = current_index | plus: 1 -%}
+{%- if prev_index >= 0 -%}
+  {%- assign prev_chapter = monograph_items[prev_index] -%}
+{%- endif -%}
+{%- if next_index < monograph_items.size -%}
+  {%- assign next_chapter = monograph_items[next_index] -%}
+{%- endif -%}
+
+<div class="monograph-container">
+
+  {%- if site.data.theme.monograph-content-menu != false -%}
+  <!-- Content Navigation Dropdown -->
+  {% include monograph/content-menu.html %}
+  {%- endif -%}
+
+  <!-- Main Reading Area -->
+  <div class="container monograph-reading-area py-4">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10">
+
+        <!-- Chapter Header -->
+        <div class="monograph-header mb-4">
+          {%- if page.chapter_number -%}
+          <p class="text-muted small mb-2">Chapter {{ page.chapter_number }}</p>
+          {%- endif -%}
+          <h1 class="monograph-title">{{ page.title }}</h1>
+          {%- if page.creator -%}
+          <p class="text-muted monograph-author">{{ page.creator }}</p>
+          {%- endif -%}
+        </div>
+
+        <!-- Chapter Content -->
+        <div class="monograph-content">
+          {%- if page.description -%}
+          <div class="lead mb-4">{{ page.description }}</div>
+          {%- endif -%}
+
+          {%- if page.object_location -%}
+            {%- if page.format contains 'image' -%}
+              <div class="text-center mb-4">
+                <img src="{{ page.object_location | relative_url }}" alt="{{ page.image_alt_text | default: page.title | escape }}" class="img-fluid">
+              </div>
+            {%- elsif page.format contains 'pdf' -%}
+              {% include item/pdf-embed.html %}
+            {%- endif -%}
+          {%- endif -%}
+
+          {{ content }}
+
+          {%- if page.object_transcript -%}
+          <div class="monograph-transcript mt-4">
+            <h3>Full Text</h3>
+            <div class="transcript-content">
+              {% assign transcript_file = page.object_transcript | prepend: '/objects/' %}
+              {% capture transcript_content %}{% include_relative {{ transcript_file }} %}{% endcapture %}
+              {{ transcript_content | markdownify }}
+            </div>
+          </div>
+          {%- endif -%}
+        </div>
+
+        <!-- Chapter Navigation at Bottom -->
+        {%- if site.data.theme.monograph-chapter-nav != false -%}
+        <div class="monograph-chapter-nav mt-5 pt-4 border-top">
+          <div class="row">
+            <div class="col-6 text-start">
+              {%- if prev_chapter -%}
+              <a href="{{ '/items/' | append: prev_chapter.objectid | append: '.html' | relative_url }}" class="btn btn-outline-primary">
+                <svg class="bi me-1" width="16" height="16" fill="currentColor">
+                  <use xlink:href="{{ '/assets/lib/cb-icons.svg' | relative_url }}#arrow-left"/>
+                </svg>
+                Previous
+              </a>
+              <div class="small text-muted mt-2">{{ prev_chapter.title | truncate: 50 }}</div>
+              {%- endif -%}
+            </div>
+            <div class="col-6 text-end">
+              {%- if next_chapter -%}
+              <a href="{{ '/items/' | append: next_chapter.objectid | append: '.html' | relative_url }}" class="btn btn-outline-primary">
+                Next
+                <svg class="bi ms-1" width="16" height="16" fill="currentColor">
+                  <use xlink:href="{{ '/assets/lib/cb-icons.svg' | relative_url }}#arrow-right"/>
+                </svg>
+              </a>
+              <div class="small text-muted mt-2">{{ next_chapter.title | truncate: 50 }}</div>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+        {%- endif -%}
+
+        <!-- Metadata Section (Collapsible) -->
+        {%- if site.data.theme.monograph-show-metadata != false -%}
+        <div class="monograph-metadata mt-5">
+          <div class="accordion" id="metadataAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="metadataHeading">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#metadataCollapse" aria-expanded="false" aria-controls="metadataCollapse">
+                  Chapter Information
+                </button>
+              </h2>
+              <div id="metadataCollapse" class="accordion-collapse collapse" aria-labelledby="metadataHeading" data-bs-parent="#metadataAccordion">
+                <div class="accordion-body">
+                  {% include item/metadata.html %}
+                  {%- if page.rights or page.rightsstatement -%}
+                  <div class="mt-3">
+                    {% include item/rights-box.html %}
+                  </div>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {%- endif -%}
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Keyboard Navigation -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('keydown', function(e) {
+    // Don't trigger if user is typing in an input
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+    // Left arrow - previous chapter
+    if (e.key === 'ArrowLeft' && '{{ prev_chapter.objectid }}') {
+      window.location.href = '{{ "/items/" | append: prev_chapter.objectid | append: ".html" | relative_url }}';
+    }
+    // Right arrow - next chapter
+    if (e.key === 'ArrowRight' && '{{ next_chapter.objectid }}') {
+      window.location.href = '{{ "/items/" | append: next_chapter.objectid | append: ".html" | relative_url }}';
+    }
+  });
+});
+</script>

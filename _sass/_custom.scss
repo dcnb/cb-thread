@@ -1,4 +1,202 @@
-/* 
-    Put your custom SCSS here! 
+/*
+    Put your custom SCSS here!
     This allows you to override any CollectionBuilder or Bootstrap CSS without modifying the base theme files directly.
 */
+
+/* ============================================
+   MONOGRAPH VIEW STYLES
+   ============================================ */
+
+/* Monograph Content Menu */
+.monograph-content-menu {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Monograph Reading Area */
+.monograph-reading-area {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Monograph Header */
+.monograph-header {
+  border-bottom: 2px solid var(--bs-gray-300);
+  padding-bottom: 1.5rem;
+}
+
+.monograph-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+.monograph-author {
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+/* Monograph Content */
+.monograph-content {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--bs-body-color);
+
+  p {
+    margin-bottom: 1.5rem;
+  }
+
+  h2, h3, h4 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  h2 {
+    font-size: 1.875rem;
+    border-bottom: 1px solid var(--bs-gray-300);
+    padding-bottom: 0.5rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  h4 {
+    font-size: 1.25rem;
+  }
+
+  blockquote {
+    border-left: 4px solid var(--bs-primary);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: var(--bs-gray-700);
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2rem auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .lead {
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+}
+
+/* Chapter Navigation */
+.monograph-chapter-nav {
+  margin-top: 3rem;
+  padding-top: 2rem;
+
+  .btn {
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-width: 2px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+  }
+
+  .small {
+    display: block;
+    max-width: 250px;
+  }
+}
+
+/* Table of Contents Dropdown */
+.monograph-toc-dropdown {
+  max-height: 70vh;
+  overflow-y: auto;
+  min-width: 350px;
+
+  .dropdown-item {
+    padding: 0.75rem 1.5rem;
+    transition: all 0.2s ease;
+
+    &.active {
+      background-color: var(--bs-primary);
+      color: white;
+      font-weight: 600;
+    }
+
+    &:not(.active):hover {
+      background-color: var(--bs-gray-100);
+      padding-left: 2rem;
+    }
+
+    .text-muted {
+      display: inline-block;
+      min-width: 50px;
+    }
+  }
+
+  .dropdown-header {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--bs-dark);
+    padding: 1rem 1.5rem 0.5rem;
+  }
+}
+
+/* Metadata Accordion */
+.monograph-metadata {
+  .accordion-button {
+    font-size: 1.1rem;
+    font-weight: 600;
+
+    &:not(.collapsed) {
+      background-color: var(--bs-light);
+      color: var(--bs-dark);
+    }
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .monograph-title {
+    font-size: 2rem;
+  }
+
+  .monograph-content {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .monograph-toc-dropdown {
+    min-width: 280px;
+  }
+
+  .monograph-chapter-nav {
+    .small {
+      font-size: 0.75rem;
+      max-width: 150px;
+    }
+  }
+}
+
+/* Print styles for monograph view */
+@media print {
+  .monograph-content-menu,
+  .monograph-chapter-nav,
+  .monograph-metadata {
+    display: none;
+  }
+
+  .monograph-content {
+    font-size: 12pt;
+    line-height: 1.6;
+  }
+}

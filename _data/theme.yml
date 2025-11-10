@@ -33,6 +33,15 @@ default-sort-field: # if a value is entered here, it must match one of the field
 browse-buttons: true # true / false, adds previous/next arrows to items, but increases build time
 
 ##########
+# MONOGRAPH VIEW
+#
+# Options for digital monograph reading interface (for items with display_template: monograph)
+monograph-title: # optional title for the monograph that appears in the table of contents dropdown
+monograph-content-menu: true # true / false, displays table of contents dropdown menu
+monograph-chapter-nav: true # true / false, displays previous/next chapter navigation at bottom
+monograph-show-metadata: true # true / false, displays collapsible metadata section at bottom of chapter
+
+##########
 # SUBJECTS PAGE
 #
 subjects-fields: subject;creator # set of fields separated by ; to be featured in the cloud (leave blank or comment out to not generate)

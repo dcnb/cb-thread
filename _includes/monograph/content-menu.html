@@ -1,0 +1,43 @@
+{% comment %}
+  Content Navigation Menu for Monograph View
+  Displays a dropdown menu with all chapters/sections
+{% endcomment %}
+
+{%- assign monograph_items = site.data[site.metadata] | where: "display_template", "monograph" | sort: "date" -%}
+
+<div class="monograph-content-menu border-bottom bg-light">
+  <div class="container">
+    <div class="py-3">
+      <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="contentMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <svg class="bi me-2" width="20" height="20" fill="currentColor">
+            <use xlink:href="{{ '/assets/lib/cb-icons.svg' | relative_url }}#list"/>
+          </svg>
+          Table of Contents
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end monograph-toc-dropdown" aria-labelledby="contentMenuDropdown">
+          {%- if site.data.theme.monograph-title -%}
+          <li><h6 class="dropdown-header">{{ site.data.theme.monograph-title }}</h6></li>
+          <li><hr class="dropdown-divider"></li>
+          {%- endif -%}
+
+          {%- for item in monograph_items -%}
+          <li>
+            <a class="dropdown-item{% if item.objectid == page.objectid %} active{% endif %}" href="{{ '/items/' | append: item.objectid | append: '.html' | relative_url }}">
+              {%- if item.chapter_number -%}
+              <span class="text-muted small">Ch. {{ item.chapter_number }}</span>
+              {%- endif -%}
+              {{ item.title }}
+              {%- if item.objectid == page.objectid -%}
+              <svg class="bi ms-2" width="16" height="16" fill="currentColor">
+                <use xlink:href="{{ '/assets/lib/cb-icons.svg' | relative_url }}#check"/>
+              </svg>
+              {%- endif -%}
+            </a>
+          </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
