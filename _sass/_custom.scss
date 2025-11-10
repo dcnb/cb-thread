@@ -200,3 +200,441 @@
     line-height: 1.6;
   }
 }
+
+/* ============================================
+   ESSAY MONOGRAPH VIEW STYLES
+   Book-inspired design with color touches
+   ============================================ */
+
+/* Color variables for essay monograph */
+:root {
+  --essay-primary: #8B4513;      /* Saddle brown - classic book color */
+  --essay-secondary: #D4A574;    /* Tan - aged paper */
+  --essay-accent: #C9A961;       /* Gold - decorative accents */
+  --essay-dark: #3E2723;         /* Dark brown */
+  --essay-light: #FFF8F0;        /* Cream - paper background */
+  --essay-border: #D7CCC8;       /* Light brown border */
+}
+
+/* Table of Contents Bar */
+.essay-monograph-toc-bar {
+  background: linear-gradient(135deg, var(--essay-light) 0%, #FAF3E6 100%);
+  border-bottom: 3px solid var(--essay-accent);
+  box-shadow: 0 2px 8px rgba(139, 69, 19, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1010;
+
+  .btn-outline-primary {
+    border-color: var(--essay-primary);
+    color: var(--essay-primary);
+    font-weight: 600;
+    padding: 0.5rem 1.5rem;
+    border-width: 2px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: var(--essay-primary);
+      border-color: var(--essay-primary);
+      color: white;
+      box-shadow: 0 4px 12px rgba(139, 69, 19, 0.3);
+    }
+  }
+}
+
+/* Essay Progress Indicator */
+.essay-progress-indicator {
+  font-family: Georgia, serif;
+  font-style: italic;
+  color: var(--essay-dark);
+  font-weight: 500;
+}
+
+/* Essay TOC Dropdown */
+.essay-monograph-toc-dropdown {
+  max-height: 70vh;
+  overflow-y: auto;
+  min-width: 400px;
+  background-color: var(--essay-light);
+  border: 2px solid var(--essay-accent);
+  box-shadow: 0 8px 24px rgba(139, 69, 19, 0.2);
+
+  .dropdown-header {
+    color: var(--essay-dark);
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-bottom: 2px solid var(--essay-accent);
+    padding: 1rem 1.5rem;
+    background: linear-gradient(to right, var(--essay-secondary), transparent);
+  }
+
+  .dropdown-item {
+    padding: 1rem 1.5rem;
+    color: var(--essay-dark);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+
+    .essay-number {
+      display: inline-block;
+      min-width: 40px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      background-color: var(--essay-secondary);
+      color: var(--essay-dark);
+      border-radius: 50%;
+      margin-right: 1rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    &.active {
+      background: linear-gradient(to right, var(--essay-primary), var(--essay-dark));
+      color: white;
+      font-weight: 600;
+      border-left: 5px solid var(--essay-accent);
+
+      .essay-number {
+        background-color: var(--essay-accent);
+        color: var(--essay-dark);
+      }
+    }
+
+    &:not(.active):hover {
+      background-color: var(--essay-secondary);
+      padding-left: 2rem;
+      border-left: 5px solid var(--essay-accent);
+    }
+  }
+}
+
+/* Main Essay Container */
+.essay-monograph-container {
+  background: linear-gradient(to bottom, var(--essay-light) 0%, #FFFDF7 100%);
+  padding: 3rem 0;
+  min-height: 70vh;
+}
+
+/* Essay Article */
+.essay-monograph-article {
+  max-width: 850px;
+  margin: 0 auto;
+  background: white;
+  padding: 3rem 4rem;
+  box-shadow: 0 10px 40px rgba(139, 69, 19, 0.15);
+  border: 1px solid var(--essay-border);
+  border-radius: 8px;
+  position: relative;
+
+  /* Decorative corner elements */
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--essay-accent);
+  }
+
+  &::before {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  &::after {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+  }
+}
+
+/* Essay Header */
+.essay-monograph-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--essay-border);
+}
+
+.essay-chapter-number {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--essay-primary);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.essay-monograph-title {
+  font-size: 3rem;
+  font-family: Georgia, serif;
+  font-weight: 700;
+  color: var(--essay-dark);
+  margin: 1rem 0;
+  line-height: 1.2;
+  text-shadow: 1px 1px 2px rgba(139, 69, 19, 0.1);
+}
+
+.essay-byline {
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--essay-primary);
+  margin-top: 1rem;
+  font-family: Georgia, serif;
+}
+
+.essay-header-ornament {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--essay-accent);
+  font-size: 1.5rem;
+
+  .ornament-left,
+  .ornament-right {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--essay-accent), transparent);
+    max-width: 150px;
+  }
+
+  .ornament-center {
+    margin: 0 1rem;
+    font-size: 2rem;
+  }
+}
+
+/* Essay Content */
+.essay-monograph-content {
+  font-family: Georgia, serif;
+  font-size: 1.15rem;
+  line-height: 1.9;
+  color: #2C2C2C;
+
+  /* Drop cap for first paragraph */
+  > p:first-of-type::first-letter {
+    font-size: 4.5rem;
+    font-weight: 700;
+    float: left;
+    line-height: 0.9;
+    margin: 0.1rem 0.15rem 0 0;
+    color: var(--essay-primary);
+    font-family: Georgia, serif;
+  }
+
+  p {
+    margin-bottom: 1.5rem;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  /* Headings within content */
+  h2, h3, h4 {
+    font-family: Georgia, serif;
+    color: var(--essay-dark);
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: 2rem;
+    border-bottom: 2px solid var(--essay-accent);
+    padding-bottom: 0.5rem;
+    color: var(--essay-primary);
+  }
+
+  h3 {
+    font-size: 1.6rem;
+    color: var(--essay-primary);
+  }
+
+  h4 {
+    font-size: 1.3rem;
+  }
+
+  /* Links */
+  a {
+    color: var(--essay-primary);
+    text-decoration: underline;
+    text-decoration-color: var(--essay-accent);
+    text-decoration-thickness: 2px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: var(--essay-dark);
+      text-decoration-color: var(--essay-primary);
+    }
+  }
+
+  /* Blockquotes - styled as pull quotes */
+  blockquote {
+    border-left: 5px solid var(--essay-accent);
+    background: linear-gradient(to right, var(--essay-light), transparent);
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--essay-dark);
+    box-shadow: 2px 2px 8px rgba(139, 69, 19, 0.1);
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* Images */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2.5rem auto;
+    border: 3px solid var(--essay-border);
+    box-shadow: 0 8px 24px rgba(139, 69, 19, 0.2);
+    border-radius: 4px;
+  }
+
+  /* Essay feature includes styling */
+  .card {
+    border: 2px solid var(--essay-border);
+    background-color: var(--essay-light);
+  }
+}
+
+/* End Ornament */
+.essay-end-ornament {
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--essay-border);
+  color: var(--essay-accent);
+  font-size: 1.5rem;
+  letter-spacing: 1rem;
+}
+
+/* Essay Navigation */
+.essay-monograph-navigation {
+  background: linear-gradient(to bottom, #FFF8F0, #FAF3E6);
+  border-top: 3px solid var(--essay-accent);
+  box-shadow: 0 -2px 8px rgba(139, 69, 19, 0.1);
+  padding: 2rem 0;
+}
+
+.essay-nav-link {
+  display: block;
+  text-decoration: none;
+  padding: 1.5rem;
+  border: 2px solid var(--essay-border);
+  border-radius: 8px;
+  background: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(139, 69, 19, 0.1);
+
+  .nav-direction {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--essay-primary);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-title {
+    font-size: 1.1rem;
+    color: var(--essay-dark);
+    font-family: Georgia, serif;
+    font-weight: 600;
+  }
+
+  &:hover {
+    border-color: var(--essay-accent);
+    background: linear-gradient(135deg, white, var(--essay-light));
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(139, 69, 19, 0.2);
+
+    .nav-direction {
+      color: var(--essay-dark);
+    }
+  }
+
+  &.prev-essay {
+    .nav-direction {
+      justify-content: flex-start;
+      svg {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  &.next-essay {
+    .nav-direction {
+      justify-content: flex-end;
+      svg {
+        margin-left: 0.5rem;
+      }
+    }
+    .nav-title {
+      text-align: right;
+    }
+  }
+}
+
+.back-to-top {
+  border-color: var(--essay-primary);
+  color: var(--essay-primary);
+
+  &:hover {
+    background-color: var(--essay-primary);
+    color: white;
+  }
+}
+
+/* Responsive adjustments for essay monograph */
+@media (max-width: 768px) {
+  .essay-monograph-article {
+    padding: 2rem 1.5rem;
+  }
+
+  .essay-monograph-title {
+    font-size: 2rem;
+  }
+
+  .essay-monograph-content {
+    font-size: 1rem;
+    line-height: 1.7;
+
+    > p:first-of-type::first-letter {
+      font-size: 3.5rem;
+    }
+  }
+
+  .essay-monograph-toc-dropdown {
+    min-width: 280px;
+  }
+
+  .essay-nav-link {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Print styles for essay monograph */
+@media print {
+  .essay-monograph-toc-bar,
+  .essay-monograph-navigation {
+    display: none;
+  }
+
+  .essay-monograph-article {
+    box-shadow: none;
+    border: none;
+  }
+
+  .essay-monograph-content {
+    font-size: 12pt;
+    line-height: 1.6;
+  }
+}

@@ -42,6 +42,13 @@ monograph-chapter-nav: true # true / false, displays previous/next chapter navig
 monograph-show-metadata: true # true / false, displays collapsible metadata section at bottom of chapter
 
 ##########
+# ESSAY MONOGRAPH VIEW
+#
+# Options for essay collection with monograph-style reading interface
+# To use: set layout: essay-monograph in individual essay frontmatter or change default in _config.yml
+essay-monograph-reading-progress: true # true / false, displays "Essay X of Y" indicator
+
+##########
 # SUBJECTS PAGE
 #
 subjects-fields: subject;creator # set of fields separated by ; to be featured in the cloud (leave blank or comment out to not generate)
